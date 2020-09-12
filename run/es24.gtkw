@@ -1,0 +1,177 @@
+[*]
+[*] GTKWave Analyzer v3.3.106 (w)1999-2020 BSI
+[*] Sat Sep 12 06:20:53 2020
+[*]
+[dumpfile] "/u/aap/src/es24/run/dump.vcd"
+[dumpfile_mtime] "Sat Sep 12 06:20:28 2020"
+[dumpfile_size] 1590910
+[savefile] "/u/aap/src/es24/run/es24.gtkw"
+[timestart] 13500
+[size] 1920 1080
+[pos] -1 -1
+*-16.000000 360800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[treeopen] test.es24.z12.
+[sst_width] 214
+[signals_width] 326
+[sst_expanded] 1
+[sst_vpaned_height] 322
+@c00200
+-test
+@28
+test.reset
+test.clock.clk
+test.clk_card
+@800022
+test.crdrd.pulses[15:0]
+@28
+(0)test.crdrd.pulses[15:0]
+(1)test.crdrd.pulses[15:0]
+(2)test.crdrd.pulses[15:0]
+(3)test.crdrd.pulses[15:0]
+(4)test.crdrd.pulses[15:0]
+(6)test.crdrd.pulses[15:0]
+(7)test.crdrd.pulses[15:0]
+(8)test.crdrd.pulses[15:0]
+(9)test.crdrd.pulses[15:0]
+(10)test.crdrd.pulses[15:0]
+(11)test.crdrd.pulses[15:0]
+(12)test.crdrd.pulses[15:0]
+(13)test.crdrd.pulses[15:0]
+(14)test.crdrd.pulses[15:0]
+@1001200
+-group_end
+@28
+(15)test.crdrd.pulses[15:0]
+test.data[0:79]
+@c00022
+test.timing_brush1[15:0]
+@28
+(0)test.timing_brush1[15:0]
+(1)test.timing_brush1[15:0]
+(2)test.timing_brush1[15:0]
+(3)test.timing_brush1[15:0]
+(4)test.timing_brush1[15:0]
+(5)test.timing_brush1[15:0]
+(6)test.timing_brush1[15:0]
+(7)test.timing_brush1[15:0]
+(8)test.timing_brush1[15:0]
+(9)test.timing_brush1[15:0]
+(10)test.timing_brush1[15:0]
+(11)test.timing_brush1[15:0]
+(12)test.timing_brush1[15:0]
+(13)test.timing_brush1[15:0]
+(14)test.timing_brush1[15:0]
+(15)test.timing_brush1[15:0]
+@1401200
+-group_end
+@28
+test.crdrd.havecard
+test.crdrd.wantcard
+test.crdrd.brush
+@420
+test.crdrd.file
+@1401200
+-test
+@800200
+-es24
+@28
+test.es24.aufnahme_and
+test.es24.aufnahme_ff
+test.es24.umkehr_and
+test.es24.umkehr_ff
+test.es24.minus_and
+test.es24.minus_ff
+test.es24.op_or1
+test.es24.op_or2
+test.es24.op_add
+test.es24.add_enb
+test.es24.op_sub
+test.es24.sub_enb
+test.es24.pot90
+test.es24.pot09
+test.es24.loeschen
+test.es24.add
+test.es24.sub
+test.es24.schmitt_even
+test.es24.schmitt_odd
+test.es24.pulse_odd
+test.es24.pulse_even
+test.es24.freischwinger
+test.es24.count_pulse1
+test.es24.count_pulse2
+test.es24.count_pulse3
+test.es24.count_pulse
+@29
+test.es24.analyse[12:1]
+@28
+test.es24.za_set
+test.es24.zaehleranalyse
+test.es24.zaehleranalyse_ff
+test.es24.zaehleranalyse_in
+@1000200
+-es24
+@c00200
+-Z1
+@28
+test.es24.z1.add_count
+test.es24.z1.sub_count
+test.es24.z1.cry_count
+test.es24.z1.digit_time
+test.es24.z1.digit_state
+test.es24.z1.digit[0:5]
+test.es24.z1.carry
+test.es24.z1.count_pulse
+test.es24.z1.carry_clr
+test.es24.z1.carry_in
+test.es24.z1.carry_out
+test.es24.z1.clr
+test.es24.z1.clr_pulse
+test.es24.z1.count
+test.es24.analyse[12:1]
+@1401200
+-Z1
+@c00200
+-digits
+@28
+test.es24.z1.digit[0:5]
+test.es24.z1.carry
+test.es24.z2.digit[0:5]
+test.es24.z2.carry
+test.es24.z3.digit[0:5]
+test.es24.z3.carry
+test.es24.z4.digit[0:5]
+test.es24.z4.carry
+test.es24.z6.digit[0:5]
+test.es24.z5.carry
+test.es24.z7.digit[0:5]
+test.es24.z6.carry
+test.es24.z8.digit[0:5]
+test.es24.z7.carry
+test.es24.z9.digit[0:5]
+test.es24.z8.carry
+test.es24.z10.digit[0:5]
+test.es24.z9.carry
+test.es24.z11.digit[0:5]
+test.es24.z10.carry
+test.es24.z12.digit[0:5]
+test.es24.z11.carry
+test.es24.z12.digit[0:5]
+test.es24.z12.carry
+@1401200
+-digits
+@22
+test.ziffer_dez1[3:0]
+test.ziffer_dez2[3:0]
+test.ziffer_dez3[3:0]
+test.ziffer_dez4[3:0]
+test.ziffer_dez5[3:0]
+test.ziffer_dez6[3:0]
+test.ziffer_dez7[3:0]
+test.ziffer_dez8[3:0]
+test.ziffer_dez9[3:0]
+test.ziffer_dez10[3:0]
+test.ziffer_dez11[3:0]
+test.ziffer_dez12[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
