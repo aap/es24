@@ -25,105 +25,112 @@ module clockdiv(inclk, outclk);
 		outclk <= outclk + 1;
 endmodule
 
-module cardreader(reset, clk, brush, pulses, columns);
+module cardreader(reset, clk, pulses, columns1, columns2);
 	input wire reset;
 	input wire clk;
-	output [15:0] pulses;
-	reg [15:0] brushtime;
-	output wire [0:79] columns;
+	output [12:0] pulses;
+	output wire [0:79] columns1;
+	output wire [0:79] columns2;
 	reg [3:0] timer;
-	output reg brush;
 
-	reg havecard;
 	reg wantcard;
-	reg [0:79] card[0:11];
+	reg [2:1] havecard;
+	reg [0:79] card1[0:11];
+	reg [0:79] card2[0:11];
+	wire endcard = timer == 13;	// card is 0-11, so this is beyond its end
+
 
 	integer line;
 	integer file, c;
 
 	initial begin
-		timer = -1;
-		brushtime = 1;
+		timer = -1;	// so we'll read the first row (0) next tick
 		havecard = 0;
-		wantcard = 1;
-		brush = 0;
+		wantcard = 0;
+
+		for(line = 11; line >= 0; line = line-1) begin
+			card1[line] = 0;
+			card2[line] = 0;
+		end
 
 		file = $fopenr("card_output.txt");
 		if(file == 0)
 			$display("FAIL");
+		
+		#300;
+		wantcard = 1;	// need a card at the beginning
 	end
 
-task readline;
-	integer c;
-	integer i;
-begin
-	if(file != 0)
-	if(!$feof(file)) begin
-		c = $fgetc(file);
-		while(c == ";") begin
-			while(c != "\n")
+	// read one line of the input file into card[line]
+	task readline;
+		integer c;
+		integer i;
+	begin
+		if(file != 0)
+		if(!$feof(file)) begin
+			c = $fgetc(file);
+			while(c == ";") begin
+				while(c != "\n")
+					c = $fgetc(file);
 				c = $fgetc(file);
-			c = $fgetc(file);
-		end
-		for(i = 0; i < 80; i = i+1) begin
-			card[line][i] = c != " ";
-			c = $fgetc(file);
-		end
-		$display("%b", card[line]);
-		if($feof(file)) begin
-			$fclose(file);
-			file = 0;
-		end
-	end
-end
-endtask
-
-	always @(*) if(wantcard) begin
-	//	#100;
-		for(line = 11; line >= 0; line = line-1)
-			readline;
-	$display("");
-		wantcard <= 0;
-		if(file != 0) begin
-			brushtime <= 1;
-			timer <= -1;
-			havecard <= 1;
-		end
-	end
-
-	always @(posedge clk)
-		if(havecard) begin
-			brushtime <= { brushtime[14:0], brushtime[15] };
-			timer <= timer + 1;
-		end
-
-	always @(posedge brushtime[0]) begin
-		if(~reset) begin
-			brush <= ~brush;
-			if(brush) begin
-				havecard <= 0;
-				wantcard <= file != 0;
+			end
+			for(i = 0; i < 80; i = i+1) begin
+				card1[line][i] = c != " ";
+				c = $fgetc(file);
+			end
+			$display("%b", card1[line]);
+			if($feof(file)) begin
+				$fclose(file);
+				file = 0;
 			end
 		end
 	end
-//	assign columns = timer <= 11 ? card[timer] : 80'bx;
-	assign columns = timer <= 11 ? card[timer] : 80'b0;
-	assign pulses[9] = brushtime[1] & clk;
-	assign pulses[8] = brushtime[2] & clk;
-	assign pulses[7] = brushtime[3] & clk;
-	assign pulses[6] = brushtime[4] & clk;
-	assign pulses[5] = brushtime[5] & clk;
-	assign pulses[4] = brushtime[6] & clk;
-	assign pulses[3] = brushtime[7] & clk;
-	assign pulses[2] = brushtime[8] & clk;
-	assign pulses[1] = brushtime[9] & clk;
-	assign pulses[0] = brushtime[10] & clk;
-	assign pulses[11] = brushtime[11] & clk;
-	assign pulses[12] = brushtime[12] & clk;
-	assign pulses[13] = brushtime[13] & clk;
-	assign pulses[14] = brushtime[14] & clk;
-	assign pulses[15] = brushtime[15] & clk;
-	assign pulses[10] = 0;
+	endtask
+
+	// Read a new card from file
+	always @(*) if(wantcard) begin
+		#100;
+		for(line = 11; line >= 0; line = line-1)
+			readline;
+		$display("");
+		wantcard <= 0;
+		if(file != 0)
+			havecard[1] <= 1;
+	end
+
+	// Generate timing pulses if there's a card in the reader
+	always @(posedge clk)
+		if(havecard)
+			timer <= timer + 1;
+
+	// Move cards
+	always @(posedge endcard) begin
+		if(~reset) begin
+			// shift card from brush 1 to brush 2
+			havecard <= { havecard[1], 1'b0 };
+			for(line = 11; line >= 0; line = line-1) begin
+				card2[line] <= card1[line];
+				card1[line] <= 0;
+			end
+			// and request new card for brush 1 if there is one
+			wantcard <= file != 0;
+		end
+	end
+	assign columns1 = timer <= 11 ? card1[timer] : 80'b0;
+	assign columns2 = timer <= 11 ? card2[timer] : 80'b0;
+	assign pulses[9] = timer == 0 & clk;
+	assign pulses[8] = timer == 1 & clk;
+	assign pulses[7] = timer == 2 & clk;
+	assign pulses[6] = timer == 3 & clk;
+	assign pulses[5] = timer == 4 & clk;
+	assign pulses[4] = timer == 5 & clk;
+	assign pulses[3] = timer == 6 & clk;
+	assign pulses[2] = timer == 7 & clk;
+	assign pulses[1] = timer == 8 & clk;
+	assign pulses[0] = timer == 9 & clk;
+	assign pulses[10] = 0;	// no such thing but we like nice indices
+	assign pulses[11] = timer == 10 & clk;
+	assign pulses[12] = timer == 11 & clk;
 endmodule
 
 module biquinary_decode(biquinary, decimal);
@@ -141,14 +148,13 @@ module biquinary_decode(biquinary, decimal);
 		6'b001001: decimal <= 7;
 		6'b000101: decimal <= 8;
 		6'b000011: decimal <= 9;
-//		default: decimal = 4'bx;
 		default: decimal = 4'b0;
 		endcase
 endmodule
 
 module test;
 	initial begin
-		$dumpfile("dump.vcd");
+		$dumpfile("run/dump.vcd");
 		$dumpvars();
 		#450000 $finish;
 	end
@@ -157,21 +163,17 @@ module test;
 	wire [31:0] clk_div;
 	wire clk_card;
 
-	// clock for ES24 oscillator
 	clock clock(clk, reset);
 	clockdiv clockdiv(clk, clk_div);
 	assign clk_card = clk_div[6];
 
-	wire [15:0] timing;
-	wire [0:79] data;
-	wire brush;
-	cardreader crdrd(reset, clk_card, brush, timing, data);
-	wire [15:0] timing_brush1 = brush == 0 ? timing : 0;
-	wire [15:0] timing_brush2 = brush == 1 ? timing : 0;
-	wire [0:79] data_brush1 = brush == 0 ? data : 0;
-	wire [0:79] data_brush2 = brush == 1 ? data : 0;
+	wire [12:0] timing;
+	wire [0:79] data_brush1;
+	wire [0:79] data_brush2;
+	cardreader crdrd(reset, clk_card, timing, data_brush1, data_brush2);
 
-
+	// Wiring on the plugboard
+	// possibly not quite right, especially umkehr and aufnahme
 	wire aufnahme1 = timing[12];
 	wire aufnahme2 = data_brush1[20];
 	wire umkehr1 = timing[12];
@@ -228,5 +230,19 @@ module test;
 	biquinary_decode bq10(ziffer_biqui[10], ziffer_dez10);
 	biquinary_decode bq11(ziffer_biqui[11], ziffer_dez11);
 	biquinary_decode bq12(ziffer_biqui[12], ziffer_dez12);
+
+	wire [0:39] zahl_dez =
+		ziffer_dez1 +
+		ziffer_dez2 * 10 +
+		ziffer_dez3 * 100 +
+		ziffer_dez4 * 1000 +
+		ziffer_dez5 * 10000 +
+		ziffer_dez6 * 100000 +
+		ziffer_dez7 * 1000000 +
+		ziffer_dez8 * 10000000 +
+		ziffer_dez9 * 100000000 +
+		ziffer_dez10 * 1000000000 +
+		ziffer_dez11 * 10000000000 +
+		ziffer_dez12 * 100000000000;
 
 endmodule

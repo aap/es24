@@ -1,78 +1,55 @@
 [*]
-[*] GTKWave Analyzer v3.3.106 (w)1999-2020 BSI
-[*] Sat Sep 12 06:20:53 2020
+[*] GTKWave Analyzer v3.3.107 (w)1999-2020 BSI
+[*] Wed Oct 14 10:56:18 2020
 [*]
 [dumpfile] "/u/aap/src/es24/run/dump.vcd"
-[dumpfile_mtime] "Sat Sep 12 06:20:28 2020"
-[dumpfile_size] 1590910
+[dumpfile_mtime] "Wed Oct 14 10:55:54 2020"
+[dumpfile_size] 1657029
 [savefile] "/u/aap/src/es24/run/es24.gtkw"
-[timestart] 13500
+[timestart] 0
 [size] 1920 1080
 [pos] -1 -1
-*-16.000000 360800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.000000 249000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.es24.z12.
 [sst_width] 214
-[signals_width] 326
+[signals_width] 420
 [sst_expanded] 1
 [sst_vpaned_height] 322
-@c00200
--test
 @28
 test.reset
 test.clock.clk
+@800200
+-test
+@28
 test.clk_card
 @800022
-test.crdrd.pulses[15:0]
+test.crdrd.pulses[12:0]
 @28
-(0)test.crdrd.pulses[15:0]
-(1)test.crdrd.pulses[15:0]
-(2)test.crdrd.pulses[15:0]
-(3)test.crdrd.pulses[15:0]
-(4)test.crdrd.pulses[15:0]
-(6)test.crdrd.pulses[15:0]
-(7)test.crdrd.pulses[15:0]
-(8)test.crdrd.pulses[15:0]
-(9)test.crdrd.pulses[15:0]
-(10)test.crdrd.pulses[15:0]
-(11)test.crdrd.pulses[15:0]
-(12)test.crdrd.pulses[15:0]
-(13)test.crdrd.pulses[15:0]
-(14)test.crdrd.pulses[15:0]
+(3)test.crdrd.pulses[12:0]
+(4)test.crdrd.pulses[12:0]
+(5)test.crdrd.pulses[12:0]
+(6)test.crdrd.pulses[12:0]
+(7)test.crdrd.pulses[12:0]
+(8)test.crdrd.pulses[12:0]
+(9)test.crdrd.pulses[12:0]
+(10)test.crdrd.pulses[12:0]
+(11)test.crdrd.pulses[12:0]
+(12)test.crdrd.pulses[12:0]
+(1)test.crdrd.pulses[12:0]
+(0)test.crdrd.pulses[12:0]
 @1001200
 -group_end
 @28
-(15)test.crdrd.pulses[15:0]
-test.data[0:79]
-@c00022
-test.timing_brush1[15:0]
-@28
-(0)test.timing_brush1[15:0]
-(1)test.timing_brush1[15:0]
-(2)test.timing_brush1[15:0]
-(3)test.timing_brush1[15:0]
-(4)test.timing_brush1[15:0]
-(5)test.timing_brush1[15:0]
-(6)test.timing_brush1[15:0]
-(7)test.timing_brush1[15:0]
-(8)test.timing_brush1[15:0]
-(9)test.timing_brush1[15:0]
-(10)test.timing_brush1[15:0]
-(11)test.timing_brush1[15:0]
-(12)test.timing_brush1[15:0]
-(13)test.timing_brush1[15:0]
-(14)test.timing_brush1[15:0]
-(15)test.timing_brush1[15:0]
-@1401200
--group_end
-@28
-test.crdrd.havecard
+test.data_brush1[0:79]
+test.data_brush2[0:79]
 test.crdrd.wantcard
-test.crdrd.brush
-@420
+@22
 test.crdrd.file
-@1401200
+@1000200
 -test
+@25
+test.zahl_dez[0:39]
 @800200
 -es24
 @28
@@ -102,9 +79,7 @@ test.es24.count_pulse1
 test.es24.count_pulse2
 test.es24.count_pulse3
 test.es24.count_pulse
-@29
 test.es24.analyse[12:1]
-@28
 test.es24.za_set
 test.es24.zaehleranalyse
 test.es24.zaehleranalyse_ff

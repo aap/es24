@@ -52,7 +52,7 @@ module es24(reset, clk,
 	input wire zaehleranalyse_in;
 
 	// from second brush
-	input wire [15:0] timing;
+	input wire [12:0] timing;
 	input wire [12:1] data;
 
 	output wire [0:5] ziffer_out1;
